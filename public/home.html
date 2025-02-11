@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Banca Virtual</title>
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <!-- Reemplaza "logo.png" por la ruta a tu logo -->
+        <img src="logo.png" alt="Logo del banco">
+        <h2>Banco Virtual</h2>
+    </div>
+    <div class="nav-actions">
+        <button id="verPerfil">Ver perfil</button>
+        <button id="cerrarSesion">Cerrar sesión</button>
+    </div>
+</nav>
+
+<!-- Contenido Principal -->
+<div class="main-content">
+    <div class="welcome">
+        <h1>Bienvenido, Luis</h1>
+    </div>
+    <div class="saldo">
+        <strong>Saldo actual:</strong> $5,000.00
+    </div>
+    <div class="cards-container">
+        <div class="card">
+            <h3>Pagar servicios</h3>
+        </div>
+        <div class="card">
+            <h3>Configurar tarjetas</h3>
+        </div>
+        <div class="card">
+            <h3>Ver movimientos</h3>
+        </div>
+        <div class="card">
+            <h3>Realizar transacciones</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Funcionalidad de los botones del navbar
+    document.getElementById("cerrarSesion").addEventListener("click", () => {
+        // Por ejemplo, redirige a la página de login
+        window.location.href = "index.html";
+    });
+    document.getElementById("verPerfil").addEventListener("click", () => {
+        alert("Aquí se mostraría la información del perfil.");
+    });
+</script>
+</body>
+</html>
