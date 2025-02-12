@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loginValidated = true;
             loginMessage.textContent = "Los datos son correctos ✓";
             loginMessage.className = "success";
+            localStorage.setItem("userName", username);
             // Mostrar el factor OTP
             otpFactor.style.display = "block";
         } else {

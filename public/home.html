@@ -5,27 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Banca Virtual</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
 </head>
 <body>
+
 <!-- Navbar -->
 <nav class="navbar">
     <div class="logo">
-        <!-- Reemplaza "logo.png" por la ruta a tu logo -->
+        <!-- Asegúrate de tener el archivo "logo.png" en la ruta correcta -->
         <img src="logo.png" alt="Logo del banco">
         <h2>Banco Virtual</h2>
     </div>
     <div class="nav-actions">
-        <button id="verPerfil">Ver perfil</button>
-        <button id="cerrarSesion">Cerrar sesión</button>
+        <button id="notificaciones" title="Notificaciones">
+            <i class="fa-solid fa-bell"></i>
+        </button>
+        <button id="verPerfil" title="Ver perfil">
+            <i class="fa-solid fa-user"></i>
+        </button>
+        <button id="cerrarSesion" title="Cerrar sesión">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
     </div>
 </nav>
-
-<!-- Contenido Principal -->
+<!-- Panel de Notificaciones -->
+<div class="notifications-panel" id="notificationsPanel">
+    <div class="notification">
+        <p><strong>Recuerda:</strong> puedes cambiar tu dinero a dólares con el mejor tipo de cambio.</p>
+    </div>
+    <div class="notification">
+        <p><strong>Atención:</strong> sus transacciones están seguras con el nuevo sistema inteligente.</p>
+    </div>
+</div>
+<!-- Modal de Perfil -->
+<div class="modal" id="perfilModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closePerfil">&times;</span>
+        <div class="profile-info">
+            <!-- Asegúrate de tener la imagen "user-photo.png" o cambia la ruta -->
+            <img src="user-photo.png" alt="Foto del usuario">
+            <p><strong>Nombres:</strong> Luis Fernando</p>
+            <p><strong>Apellidos:</strong> Dias Vega</p>
+            <p><strong>DNI:</strong> 123456789</p>
+            <p><strong>Edad:</strong> 28</p>
+            <p><strong>Dirección:</strong> Mz A Lote 5 Urb Los Cedros</p>
+            <p><strong>Distrito:</strong> San Miguel</p>
+            <p><strong>Provincia:</strong> Lima</p>
+            <p><strong>Región:</strong> Lima</p>
+        </div>
+    </div>
+</div>
+<!-- Contenido principal -->
 <div class="main-content">
     <div class="welcome">
-        <h1>Bienvenido, Luis</h1>
+        <h1>Bienvenido a tu banca, {name user}</h1>
     </div>
     <div class="saldo">
         <strong>Saldo actual:</strong> $5,000.00
@@ -45,16 +80,9 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Funcionalidad de los botones del navbar
-    document.getElementById("cerrarSesion").addEventListener("click", () => {
-        // Por ejemplo, redirige a la página de login
-        window.location.href = "index.html";
-    });
-    document.getElementById("verPerfil").addEventListener("click", () => {
-        alert("Aquí se mostraría la información del perfil.");
-    });
-</script>
+<footer>
+    <p>&copy; 2025 Banco Virtual. Todos los derechos reservados.</p>
+</footer>
+<script src="scripts.js"></script>
 </body>
 </html>
