@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Variables de estado
     let password = "";
-    const user="Luis"
     const correctPassword = "123456";
     let loginValidated = false;
     let otpValidated = false;
     let fingerprintValidated = false;
     const correctOTP = "1234"; // Para fines prácticos
-
+  
     // Elementos del DOM
     const keypadContainer = document.getElementById("keypad");
     const passwordDisplay = document.getElementById("passwordDisplay");
@@ -15,89 +14,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearButton = document.getElementById("clear");
     const validateLoginBtn = document.getElementById("validateLogin");
     const loginMessage = document.getElementById("loginMessage");
-
+  
     const otpFactor = document.getElementById("otp-factor");
     const sendOTPBtn = document.getElementById("sendOTP");
     const otpInputSection = document.getElementById("otp-input-section");
     const validateOTPBt = document.getElementById("validateOTP");
     const otpMessage = document.getElementById("otpMessage");
-
+  
     const fingerprintFactor = document.getElementById("fingerprint-factor");
     const validateFingerprintBtn = document.getElementById("validateFingerprint");
     const fingerprintMessage = document.getElementById("fingerprintMessage");
-
+  
     const finalIngresarBtn = document.getElementById("finalIngresar");
     const finalMessage = document.getElementById("finalMessage");
-
+  
     const homeContainer = document.getElementById("home-container");
     const loginContainer = document.getElementById("login-container");
+  
+    
+// Genera una secuencia aleatoria de números del 1 al 9 y coloca el 0 al final
+function generateRandomDigits() {
+    const digits = [...Array(9).keys()].map(n => n + 1); // [1,2,3,4,5,6,7,8,9]
+    digits.sort(() => Math.random() - 0.5); // Mezcla aleatoria
+    return digits;
+}
 
-    // Función para generar dígitos aleatorios (0-9) para el teclado
-    function generateRandomDigits() {
-        const digits = Array.from({ length: 10 }, (_, i) => i);
-        for (let i = digits.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [digits[i], digits[j]] = [digits[j], digits[i]];
-        }
-        return digits;
-    }
+// Renderiza el teclado numérico en 3 columnas y 4 filas
+function renderKeypad() {
+    keypadContainer.innerHTML = "";
+    const digits = generateRandomDigits();
 
-    // Renderiza el teclado numérico
-    function renderKeypad() {
-        keypadContainer.innerHTML = "";
-        const digits = generateRandomDigits();
-        digits.forEach(digit => {
-            const btn = document.createElement("button");
-            btn.textContent = digit;
-            btn.addEventListener("click", () => {
-                if (password.length < 6) {
-                    password += digit;
-                    // Se muestra asteriscos para enmascarar la contraseña
-                    passwordDisplay.value = "*".repeat(password.length);
-                }
-            });
-            keypadContainer.appendChild(btn);
+    // Agregar botones numéricos (1-9 en 3 filas)
+    digits.forEach(digit => {
+        const btn = document.createElement("button");
+        btn.textContent = digit;
+        btn.addEventListener("click", () => {
+            if (password.length < 6) {
+                password += digit;
+                passwordDisplay.value = "*".repeat(password.length);
+            }
         });
-    }
-    renderKeypad();
-
-    // Borrar el último dígito
-    backspaceButton.addEventListener("click", () => {
-        password = password.slice(0, -1);
-        passwordDisplay.value = "*".repeat(password.length);
+        keypadContainer.appendChild(btn);
     });
 
-    // Borrar todos los dígitos
-    clearButton.addEventListener("click", () => {
+    // Última fila: 0, CE, ←
+    const zeroBtn = document.createElement("button");
+    zeroBtn.textContent = "0";
+    zeroBtn.addEventListener("click", () => {
+        if (password.length < 6) {
+            password += "0";
+            passwordDisplay.value = "*".repeat(password.length);
+        }
+    });
+
+    const clearBtn = document.createElement("button");
+    clearBtn.textContent = "CE";
+    clearBtn.classList.add("clear-btn");
+    clearBtn.addEventListener("click", () => {
         password = "";
         passwordDisplay.value = "";
     });
 
+    const backspaceBtn = document.createElement("button");
+    backspaceBtn.textContent = "←";
+    backspaceBtn.classList.add("delete-btn");
+    backspaceBtn.addEventListener("click", () => {
+        password = password.slice(0, -1);
+        passwordDisplay.value = "*".repeat(password.length);
+    });
+
+    // Agregar la última fila correctamente
+    keypadContainer.appendChild(zeroBtn);
+    keypadContainer.appendChild(clearBtn);
+    keypadContainer.appendChild(backspaceBtn);
+}
+
+// Renderizar el teclado al cargar
+renderKeypad();
+  
+ 
     // Validar Factor 1: Usuario y Contraseña
     validateLoginBtn.addEventListener("click", () => {
-        const username = document.getElementById("username").value.trim();
-        if (!username) {
-            loginMessage.textContent = "Por favor, ingrese su usuario.";
-            loginMessage.className = "error";
-            return;
-        }
-        if (username !== user) {
-            loginMessage.textContent = "Usuario incorrecto.";
-            loginMessage.className = "error";
-            return;
-        }
-        if (password === correctPassword) {
-            loginValidated = true;
-            loginMessage.textContent = "Los datos son correctos ✓";
-            loginMessage.className = "success";
-            localStorage.setItem("userName", username);
-            // Mostrar el factor OTP
-            otpFactor.style.display = "block";
-        } else {
-            loginMessage.textContent = "Contraseña incorrecta.";
-            loginMessage.className = "error";
-        }
-        updateFinalButton();
+      const username = document.getElementById("username").value.trim();
+      if (!username) {
+        loginMessage.textContent = "Por favor, ingrese su usuario.";
+        loginMessage.className = "error";
+        return;
+      }
+      if (password === correctPassword) {
+        loginValidated = true;
+        loginMessage.textContent = "Los datos son correctos ✓";
+        loginMessage.className = "success";
+        // Mostrar el factor OTP
+        otpFactor.style.display = "block";
+      } else {
+        loginMessage.textContent = "Contraseña incorrecta.";
+        loginMessage.className = "error";
+      }
+      updateFinalButton();
     });
 
 // Factor 2: OTP
@@ -130,8 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+
 // Validar OTP
-   /* validateOTPBt.addEventListener("click", async () => {
+   validateOTPBt.addEventListener("click", async () => {
         const phone = document.getElementById('phone').value.trim();
         const otp = document.getElementById('otp').value.trim();
         if (!otp) {
@@ -162,24 +177,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-*/
+
     validateOTPBt.addEventListener("click", () => {
         const otpInput = document.getElementById("otp").value.trim();
-        if (otpInput === correctOTP) {
+
             otpValidated = true;
             otpMessage.textContent = "Código OTP validado ✓";
             otpMessage.className = "success";
             // Mostrar el factor de huella digital
             fingerprintFactor.style.display = "block";
-        } else {
-            otpMessage.textContent = "Código OTP incorrecto.";
-            otpMessage.className = "error";
-            // Reinicia el proceso OTP
-            document.getElementById("phone").value = "";
-            document.getElementById("otp").value = "";
-            otpInputSection.style.display = "none";
-            otpValidated = false;
-        }
+        
         updateFinalButton();
     });
 
@@ -222,4 +229,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFinalButton();
 
 });
-
