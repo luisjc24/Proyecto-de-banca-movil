@@ -1,4 +1,5 @@
 /* Estilos generales */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -45,35 +46,42 @@ input[type="text"] {
     font-size: 0.9em;
 }
 
+
 /* Teclado numérico */
 #keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    
 }
 
 #keypad button {
-    padding: 15px;
+    padding: 10px;
     font-size: 1.2em;
+    font-family: 'Poppins', sans-serif; /* Fuente elegante */
+    font-weight: bold; /* Negrita */
     border: none;
     background-color: #e0e0e0;
     border-radius: 4px;
     cursor: pointer;
+    color: rgb(36, 35, 35);
+    font-style:bold;
 }
 
 /* Botones de acción para el teclado */
 #keypad-actions {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 #keypad-actions button {
     flex: 1;
     margin: 0 5px;
-    padding: 10px;
+    padding: 5 px;
     font-size: 1em;
+    
     border: none;
     background-color: #d9534f;
     color: #fff;
@@ -93,7 +101,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 5 px;
 }
 
 button:hover:not(.disabled) {
@@ -104,7 +112,16 @@ button:hover:not(.disabled) {
 button.disabled {
     background-color: #dc3545;
 }
+/* Estilo especial para los botones de borrar */
+.delete-btn {
+    background-color: #ffcc00;
+    color: #000;
+}
 
+.clear-btn {
+    background-color: #d9534f;
+    color: white;
+}
 /* Mensajes */
 span {
     display: block;
